@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  markitdown:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: markitdown:latest
+    volumes:
+      - ./data:/data
+    # Example: Convert all PDF files in ./data directory
+    # command: ["find", "/data", "-name", "*.pdf", "-exec", "markitdown", "{}", "-o", "{}.md", ";"]
+    
+  # Service for one-time file conversion
+  convert:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: markitdown:latest
+    volumes:
+      - ./data:/data
+    # Override this command when running
+    # Example: docker-compose run --rm convert /data/document.pdf -o /data/output.md
+    command: ["--help"]
